@@ -1,0 +1,118 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and Fonts
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Enable syntax hl
+syntax enable
+
+set background=dark
+"colorscheme zellner "not clear... I do not like it.
+colorscheme desertEx
+
+"Support chinese encodings
+let &termencoding=&encoding
+set fileencodings=utf-8,cp936,gb18030,gbk,gb2312,ucs-bom,latin-1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VIM userinterface
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"No sound on errors.
+set noerrorbells
+set novisualbell
+set t_vb=
+"show matching bracets
+set showmatch
+"How many tenths of a second to blink
+set mat=2
+"Highlight search things
+set hlsearch
+"show match when inputting
+set incsearch
+"show input command
+set showcmd
+
+set ignorecase
+set smartcase
+
+"set cindent
+set autoindent  "same level indent
+set smartindent "next level indent
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
+set nu
+
+"Always show current position
+set ruler
+
+"Restore cursor to file position in previous editing session
+set viminfo='10,\"100,:20,%,n~/.viminfo
+au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+
+"cscopetag
+set cst
+set csto=0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"python
+"the following is no need. (due to filetype plugin on?)
+"set filetype=python
+"au BufNewFile,BufRead *.py,*.pyw setf python
+"pydiction:
+let g:pydiction_location = '~/.vim/after/ftplugin/pydiction/complete-dict'
+
+"The following two used for omnicppcomplete
+set nocp
+filetype plugin on
+
+"The following close automatically the preview window after a completion for
+"omnicppcomplete
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+
+"The following set for vimwiki
+set nocompatible
+"filetype plugin on "already set above
+syntax on
+
+let wiki_bodhi = {}
+let wiki_bodhi.path = '/home/bodhi/my_wikis/wiki'
+let wiki_bodhi.diary_link_count = 5
+
+let wiki_vdsis = {}
+let wiki_vdsis.path = '/home/bodhi/my_wikis/vdsis/wiki'
+let wiki_vdsis.diary_link_count = 5
+
+let g:vimwiki_list = [wiki_bodhi, wiki_vdsis]
+"let g:vimwiki_list = [{'path': '~/vimwiki/',
+"    \ 'html_header': '~/template/header.htm',
+"    \ 'html_footer': '~/template/footer.htm',
+"    \ 'diary_link_count': 5}]
+let g:vimwiki_camel_case = 0
+let g:vimwiki_hl_cb_checked = 1
+let g:vimwiki_menu = ''
+let g:vimwiki_CJK_length = 1
+"let g:vimwiki_valid_html_tags='b,i,s,u,sub,sup,kbd,del,br,hr,div,code,h1'
+let g:vimwiki_valid_html_tags='b,i,s,u,sub,sup,kbd,br,hr,div,del,code,red,center,left,right,h2,h4,h5,h6,pre,script,style'
+"Headers are numbered starting from header level 2.
+let g:vimwiki_html_header_numbering = 2
+let g:vimwiki_use_mouse = 1
+"use '\tt' to check/uncheck to-do lists
+nmap <leader>tt <Plug>VimwikiToggleListItem
+let g:vimwiki_folding = 'list'
+
+"Marks
+let g:mwDefaultHighlightingPalette = 'maximum'
+let g:mwAutoLoadMarks = 1
+let g:mwAutoSaveMarks = 1
+
+"create ctags for omnicppcomplete
+map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
+
+"Open and close the taglist.vim separately
+"nmap <F10>  :TrinityToggleTagList<CR>
