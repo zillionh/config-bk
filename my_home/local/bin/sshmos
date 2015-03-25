@@ -1,0 +1,47 @@
+#! /usr/bin/expect
+
+set myvm(pam) 10.75.168.126
+set myvm(mce) 10.75.168.125
+set myvm(mpec) 10.75.168.123
+set myvm(mpew) 10.75.168.122
+set myvm(app1) 10.75.168.121
+set myvm(app2) 10.75.168.120
+set myvm(app3) 10.75.168.119
+set myvm(app4) 10.75.168.118
+set myvm(app5) 10.75.168.117
+set myvm(app6) 10.75.168.116
+
+if {[info exists myvm($argv)]} {
+    set ip $myvm($argv)
+} else {
+    set ip $argv
+}
+
+set pwd1 "default"
+set pwd2 "We!come2mo$"
+set pwd3 "ernst"
+
+spawn ssh admin@$ip
+
+set timeout 60
+expect {
+    "(yes/no)?" {
+        send "yes\r"
+        expect "password:" {send "$pwd1\r"}
+    }
+    "password:" {
+        send "$pwd1\r"
+    }
+}
+expect {
+    "#" {
+        send "zzdebugshell\r"
+        expect "\r\n" {send "$pwd1\r"}
+        expect "\r\n" {send "$pwd3\r"}
+    }
+    "]" {
+        send "su -\r"
+        expect "Password:" {send "$pwd2\r"}
+    }
+}
+interact

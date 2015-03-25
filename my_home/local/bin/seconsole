@@ -1,0 +1,31 @@
+#! /usr/bin/expect
+
+set myse(cdsm) 10.74.61.11
+set myport(cdsm) 2010
+
+if {[info exists myse($argv)]} {
+    set ip $myse($argv)
+    set port $myport($argv)
+} else {
+    send_user "$argv console config not found\n"
+    exit
+}
+
+set pwd1 "default"
+set pwd2 "ernst"
+
+spawn telnet $ip $port
+
+set timeout 5
+expect "Password OK" {send "\r"}
+expect {
+    "Username:" {
+        send "admin\r"
+        expect "Password:" {send "$pwd1\r"}
+        expect "#" {send "zzdebugshell\r"}
+        expect "\r\n" {send "$pwd1\r"}
+        expect "\r\n" {send "$pwd2\r"}
+    }
+    "debugshell#"
+}
+interact

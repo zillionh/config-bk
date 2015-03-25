@@ -1,0 +1,47 @@
+#! /usr/bin/expect
+
+set myse(se1) 10.79.53.30
+set myse(se2) 10.79.53.31
+set myse(se3) 10.79.53.208
+set myse(sr) 10.79.53.33
+set myse(cdsm1) 10.79.53.206
+set myse(cdsm) 10.74.23.48
+set myse(250) 10.74.14.69
+
+set myse(1161) 10.75.168.138
+set myse(1162) 10.75.168.139
+set myse(1163) 10.75.168.140
+set myse(1164) 10.75.168.141
+set myse(1165) 10.75.168.142
+
+set myse(1171) 10.75.168.144
+set myse(1172) 10.75.168.145
+set myse(1173) 10.75.168.146
+set myse(1174) 10.75.168.147
+set myse(1175) 10.75.168.148
+
+if {[info exists myse($argv)]} {
+    set ip $myse($argv)
+} else {
+    set ip $argv
+}
+
+set pwd1 "default"
+set pwd2 "ernst"
+
+spawn ssh admin@$ip
+
+set timeout 60
+expect {
+    "(yes/no)?" {
+        send "yes\r"
+        expect "password:" {send "$pwd1\r"}
+    }
+    "password:" {
+        send "$pwd1\r"
+    }
+}
+expect "#" {send "zzdebugshell\r"}
+expect "\r\n" {send "$pwd1\r"}
+expect "\r\n" {send "$pwd2\r"}
+interact

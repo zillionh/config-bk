@@ -1,0 +1,4 @@
+echo 'VimwikiAll2HTML' > /tmp/wiki2html.ex
+echo 'q' >> /tmp/wiki2html.ex
+vim -T dumb -n -E -S /tmp/wiki2html.ex /home/bodhi/my_wikis/vdsis/wiki/index.wiki 2>&1 > /dev/null
+#sudo rsync -az /home/bodhi/my_wikis/vdsis/wiki_html/ /usr/share/nginx/html/wiki_html/
