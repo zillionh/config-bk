@@ -10,18 +10,29 @@ set myvm(app3) 10.75.168.119
 set myvm(app4) 10.75.168.118
 set myvm(app5) 10.75.168.117
 set myvm(app6) 10.75.168.116
+set myvm(se1) 10.75.168.111
+set myvm(se2) 10.75.168.112
+set myvm(mxe) 10.75.168.110
 
-if {[info exists myvm($argv)]} {
+set i 0; foreach n $argv {set [incr i] $n}
+
+if {[info exists myvm($1)]} {
     set ip $myvm($argv)
 } else {
     set ip $argv
+}
+
+if {[info exists 2]} {
+    set port $2
+} else {
+    set port 22
 }
 
 set pwd1 "default"
 set pwd2 "We!come2mo$"
 set pwd3 "ernst"
 
-spawn ssh admin@$ip
+spawn ssh admin@$ip -p $port
 
 set timeout 60
 expect {
