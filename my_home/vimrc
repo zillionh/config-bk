@@ -5,7 +5,7 @@
 syntax enable
 
 set background=dark
-"colorscheme zellner "not clear... I do not like it.
+"colorscheme solarized
 colorscheme desertEx
 
 "Support chinese encodings
@@ -58,11 +58,7 @@ set csto=0
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "python
-"the following is no need. (due to filetype plugin on?)
-"set filetype=python
-"au BufNewFile,BufRead *.py,*.pyw setf python
-"pydiction:
-let g:pydiction_location = '~/.vim/after/ftplugin/pydiction/complete-dict'
+"Install python-jedi vim-jedi, and jedi works!
 
 "The following two used for omnicppcomplete
 set nocp
