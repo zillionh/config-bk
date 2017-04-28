@@ -1,0 +1,11 @@
+[user]
+	name = Zhilin Huang
+	email = zhilhuan@cisco.com
+[push]
+	default = simple
+[diff]
+	tool = kdiff3
+[merge]
+	tool = kdiff3
+[core]
+	excludesfile = /home/bodhi/.gitignore_global
