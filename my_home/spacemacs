@@ -309,9 +309,43 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  ;;org-mode
+  ;; ----------------------------------------------------------------
+  ;; Org-mode
+  ;; ----------------------------------------------------------------
   (with-eval-after-load 'org
+    ;; Various preferences
+    (setq org-log-done t
+          org-completion-use-ido t
+          org-edit-src-content-indentation 0
+          org-edit-timestamp-down-means-later t
+          org-agenda-start-on-weekday nil
+          org-agenda-span 14
+          org-agenda-include-diary t
+          org-agenda-window-setup 'current-window
+          org-fast-tag-selection-single-key 'expert
+          org-export-kill-product-buffer-when-displayed t
+          org-export-odt-preferred-output-format "doc"
+          org-tags-column 80
+          ;; org-startup-indented t
+          ;; {{ org 8.2.6 has some performance issue. Here is the workaround.
+          ;; @see http://punchagan.muse-amuse.in/posts/how-i-learnt-to-use-emacs-profiler.html
+          org-agenda-inhibit-startup t ;; ~50x speedup
+          org-agenda-use-tag-inheritance nil ;; 3-4x speedup
+          ;; }}
+          )
+
+    ;; Refile targets include this file and any file contributing to the agenda - up to 5 levels deep
     (setq org-refile-targets (quote ((nil :maxlevel . 5) (org-agenda-files :maxlevel . 5) ("finish.org" :level . 2))))
+    ;; Targets start with the file name - allows creating level 1 tasks
+    (setq org-refile-use-outline-path (quote file))
+    ;; Targets complete in steps so we start with filename, TAB shows the next level of targets etc
+    (setq org-outline-path-complete-in-steps t)
+
+    (setq org-todo-keywords
+          (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
+                  (sequence "WAITING(w@/!)" "SOMEDAY(S)" "PROJECT(P@)" "|" "CANCELLED(c@/!)"))))
+
+    (setq org-outline-path-complete-in-steps t)
     (setq gtd-directory (expand-file-name "~/my_wikis/org-wiki/gtd"))
     (setq org-capture-templates
           '(("t" "Todo" entry (file+headline (concat gtd-directory "/task.org") "Tasks")
