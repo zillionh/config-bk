@@ -1,0 +1,8 @@
+http://arch.com/hls_vod/vod2.m3u8
+http://arch.com/hls_vod/vod2/high_stream_111312_072707_100.ts
+http://arch.com/hls_vod/vod2/high_stream_111312_072707_101.ts
+http://arch.com/hls_vod/vod2/high_stream_111312_072707_102.ts
+http://arch.com/hls_vod/vod2/high_stream_111312_072707_103.ts
+http://arch.com/hls_vod/vod2/high_stream_111312_072707_104.ts
+http://arch.com/hls_vod/vod2/high_stream_111312_072707_105.ts
+http://arch.com/hls_vod/vod2/high_stream_111312_072707_106.ts
