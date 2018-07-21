@@ -1,0 +1,15 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+PS1='[\u@\h \W]\$ '
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+export TERM=xterm-color
+
+source ~/local/etc/git-completion.bash
+export GOPATH=~/go
+export PATH=$PATH:/usr/bin/vendor_perl/:/home/bodhi/local/bin:/home/bodhi/.gem/ruby/2.2.0/bin:$GOPATH/bin
