@@ -1,6 +1,6 @@
 [user]
-	name = Zhilin Huang
-	email = zhilhuan@cisco.com
+	name = Zillion Huang
+	email = zillion.h@gmail.com
 [push]
 	default = simple
 [diff]
@@ -9,3 +9,7 @@
 	tool = kdiff3
 [core]
 	excludesfile = /home/bodhi/.gitignore_global
+[http]
+	proxy = http://127.0.0.1:1087
+[https]
+	proxy = https://127.0.0.1:1087
