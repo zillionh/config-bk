@@ -33,27 +33,38 @@ values."
    '(
      html
      python
+     (go :variables
+         gofmt-command "goimports"
+         go-tab-width 4
+         go-use-gometalinter t)
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-enable-snippets-in-popup t)
      ;; better-defaults
      emacs-lisp
      git
      markdown
-     org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     (org :variables org-enable-reveal-js-support t)
+     plantuml
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
      gtags
      (latex :variables
             latex-build-command "LaTeX"
             latex-enable-auto-fill t)
+     (c-c++ :variables
+            c-c++-default-mode-for-headers 'c++-mode
+            c-c++-enable-clang-support t)
      ;; spell-checking
-     ;; syntax-checking
+     (syntax-checking :variables
+                      syntax-checking-enable-by-default nil)
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
@@ -316,6 +327,45 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   ;; ----------------------------------------------------------------
+  ;; clang-format
+  ;; ----------------------------------------------------------------
+  ;; Bind clang-format-region to C-M-tab in all modes:
+  (globle-set-key [C-M-tab] 'clang-format-region)
+  ;; Bind clang-format-buffer to tab on the c++-mode only:
+  (add-hook 'c++-mode-hook 'clang-format-bindings)
+  (defun clang-format-bindings ()
+    (define-key c++-mode-map [tab] 'clang-format-buffer))
+  ;; ----------------------------------------------------------------
+  ;; FONTS
+  ;; ----------------------------------------------------------------
+  ;; Set the fonts to format correctly for specific modes. Default is set for fixed
+  ;; so we only need to have the exceptions
+  (setq myfonts
+        (cond ((eq system-type 'darwin)     '("Monaco"    "STHeiti"))
+              ((eq system-type 'gnu/linux)  '("Menlo"     "WenQuanYi Zen Hei"))
+              ((eq system-type 'windows-nt) '("Consolas"  "Microsoft Yahei"))))
+  (set-face-attribute 'variable-pitch nil :font
+                      (format "%s:pixelsize=%d" (car myfonts) 14))
+  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font) charset
+                      (font-spec :family (car (cdr myfonts)))))
+  ;; Fix chinese font width and rescale
+  (setq face-font-rescale-alist '(("Microsoft Yahei" . 1.2) ("WenQuanYi Micro Hei Mono" . 1.2) ("STHeiti". 1.2)))
+  (add-hook 'org-mode-hook 'set-buffer-variable-pitch)
+  (add-hook 'markdown-mode-hook 'set-buffer-variable-pitch)
+  (add-hook 'Info-mode-hook 'set-buffer-variable-pitch)
+  (defun set-buffer-variable-pitch ()
+    (interactive)
+    (variable-pitch-mode t)
+    (setq line-spacing 3)
+    (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+    ;; (set-face-attribute 'org-link nil :inherit 'fixed-pitch)
+    ;; (set-face-attribute 'org-code nil :inherit 'fixed-pitch)
+    ;; (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
+    ;; (set-face-attribute 'org-date nil :inherit 'fixed-pitch)
+    ;; (set-face-attribute 'org-special-keyword nil :inherit 'fixed-pitch)
+    )
+  ;; ----------------------------------------------------------------
   ;; Org-mode
   ;; ----------------------------------------------------------------
   (with-eval-after-load 'org
@@ -377,6 +427,17 @@ you should place your code here."
                           ))))
             ))
     )
+  (display-time-mode 1)
+  ;; inline image 不用展示实际大小，可以自定义大小显示
+  (setq org-image-actual-width nil)
+  ;; active Org-babel languages
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(;; allow evaluate plantuml
+     (plantuml . t)))
+  (setq org-plantuml-jar-path
+        (expand-file-name "~/local/lib/plantuml.jar"))
+  (setq org-reveal-root "file:///Users/bodhi/local/lib/reveal.js-3.7.0")
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
   )
 
