@@ -1,5 +1,9 @@
-Host github
-    User git
-    Hostname github.com
-    PreferredAuthentications publickey
-    IdentityFile ~/.ssh/zillionh
+Host vmc7
+    User root
+    Hostname 192.168.56.101
+    
+Host *
+    ServerAliveInterval 300
+    ServerAliveCountMax 2
+    ControlMaster auto
+    ControlPath /tmp/ssh-%r@%h:%p
