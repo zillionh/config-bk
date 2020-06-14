@@ -16,7 +16,7 @@ export https_proxy='http://127.0.0.1:1087'
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 export GOPATH=~/go
-export PATH=$PATH:/usr/bin/vendor_perl/:/Users/bodhi/local/bin:/Users/bodhi/.gem/ruby/2.2.0/bin:$GOPATH/bin:/Users/bodhi/tools/ffmpeg-static/bin/:/usr/local/anaconda3/bin:/usr/local/texlive/2019/bin/x86_64-darwin/
+export PATH=$PATH:/usr/bin/vendor_perl/:/Users/bodhi/local/bin:/Users/bodhi/.gem/ruby/2.2.0/bin:$GOPATH/bin:/Users/bodhi/local/ffmpeg-static/bin/:/usr/local/anaconda3/bin:/usr/local/texlive/2019/bin/x86_64-darwin/
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
